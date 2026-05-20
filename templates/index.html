@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☆星座男子癒し守護神占い☆</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+
+<body>
+    <div class="header-container">
+        <img src="{{ url_for('static', filename='images/the_moon.png') }}" alt="月のイラスト" class="header-img">
+
+        <h1>星座守護神男子占い</h1>
+
+        <img src="{{ url_for('static', filename='images/playing_cards.png') }}" alt="星座盤のイラスト" class="header-img">
+    </div>
+    <div class="fortune-card">
+        <p class="intro-text">あなたの星座と今の気分から、<br class="sp-only">あなたの守護神がやさしく包みます。
+        </p>
+        <hr>
+
+        {% set prev = get_flashed_messages(category_filter=['data'])[0] if
+        get_flashed_messages(category_filter=['data']) else {} %}
+
+        <form action="/result" method="post">
+
+            {% with messages = get_flashed_messages(category_filter=['message']) %}
+            {% if messages %}
+            <div class="error-container">
+                {% for message in messages %}
+                <p class="error-item">⚠️ {{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="form-group">
+                <label for="username">お名前（ニックネーム）</label>
+                <input type="text" id="username" name="name" placeholder="呼んでほしい名前" value="{{ prev.name or '' }}">
+            </div>
+            <!-- テスト用コード -->
+            <!-- <input type="text" id="username" name="username" placeholder="呼んでほしい名前" value="テスト"> -->
+
+
+            <div class="form-group">
+                <label for="constellation">あなたの星座</label>
+                <select id="constellation" name="constellation">
+                    <option value="">-- 星座を選択してください --</option>
+                    <option value="牡羊座" {% if prev.constellation=='牡羊座' %}selected{% endif %}>牡羊座</option>
+                    <option value="牡牛座" {% if prev.constellation=='牡牛座' %}selected{% endif %}>牡牛座</option>
+                    <!-- テスト用 -->
+                    <!-- <option value="牡牛座" selected>牡牛座</option> -->
+                    <option value="双子座" {% if prev.constellation=='双子座' %}selected{% endif %}>双子座</option>
+                    <option value="蟹座" {% if prev.constellation=='蟹座' %}selected{% endif %}>蟹座</option>
+                    <option value="獅子座" {% if prev.constellation=='獅子座' %}selected{% endif %}>獅子座</option>
+                    <option value="乙女座" {% if prev.constellation=='乙女座' %}selected{% endif %}>乙女座</option>
+                    <option value="天秤座" {% if prev.constellation=='天秤座' %}selected{% endif %}>天秤座</option>
+                    <option value="蠍座" {% if prev.constellation=='蠍座' %}selected{% endif %}>蠍座</option>
+                    <option value="射手座" {% if prev.constellation=='射手座' %}selected{% endif %}>射手座</option>
+                    <option value="山羊座" {% if prev.constellation=='山羊座' %}selected{% endif %}>山羊座</option>
+                    <option value="水瓶座" {% if prev.constellation=='水瓶座' %}selected{% endif %}>水瓶座</option>
+                    <option value="魚座" {% if prev.constellation=='魚座' %}selected{% endif %}>魚座</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="mood">今の気分は？</label>
+                <select id="mood" name="mood">
+                    <option value="">-- 今の気分を選択してください --</option>
+                    <option value="tired" {% if prev.mood=='tired' %}selected{% endif %}>癒やしてほしい</option>
+                    <!-- テスト用 -->
+                    <!-- <option value="tired" selected>癒やしてほしい</option> -->
+                    <option value="happy" {% if prev.mood=='happy' %}selected{% endif %}>もっと元気になりたい！</option>
+                    <option value="lonely" {% if prev.mood=='lonely' %}selected{% endif %}>誰かにそばにいてほしい</option>
+                </select>
+            </div>
+
+            <div class="btn-container" style="margin-top: 40px;">
+                <button type="submit" class="fortune-btn">結果を見る</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="stars">
+        <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/stars.js') }}"></script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,626 @@
+/* ==========================================================================
+   1. カラー変数と共通設定
+   ========================================================================== */
+:root {
+    --twilight-lavender: #c7d2fe;
+    /* 左上の薄青紫 */
+    --luminous-purple: #f3e8ff;
+    /* 中間のラベンダー */
+    --luminous-pink: #fbcfe8;
+    /* 右下のサクラピンク */
+    --text-dark-purple: #2e2a72;
+    /* 読みやすい濃いくすみパープル */
+    --champagne-gold: #fde68a;
+    /* アクセントゴールド */
+    --card-white: rgba(255, 255, 255, 0.7);
+    /* ほんのり透ける白 */
+}
+
+body {
+    background: linear-gradient(135deg, var(--twilight-lavender) 0%, var(--luminous-purple) 50%, var(--luminous-pink) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Noto Serif JP', serif;
+    color: var(--text-dark-purple);
+}
+
+/* 💡 タイトルと画像を綺麗に横一列に並べて中央に寄せる設定 */
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    line-height: 1;
+}
+
+/* 💡 左右の画像の大きさを整える設定 */
+.header-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    opacity: 0.85;
+}
+
+/* --- メインタイトルを神秘的に輝かせる --- */
+h1 {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 4px;
+    margin: 0;
+    padding: 0;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    animation: titleGlow 12s ease-in-out infinite;
+}
+
+/* 💻 PC画面のときは、スマホ用の改行を非表示にして1行で見せる */
+.sp-only {
+    display: none;
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        text-shadow: 0px -2px 0 var(--text-dark-purple), 0px 2px 0 var(--text-dark-purple),
+            -2px 0px 0 var(--text-dark-purple), 2px 0px 0 var(--text-dark-purple),
+            -2px -2px 0 var(--text-dark-purple), 2px -2px 0 var(--text-dark-purple),
+            -2px 2px 0 var(--text-dark-purple), 2px 2px 0 var(--text-dark-purple),
+            0 0 25px #10b981, 0 0 60px #10b981, 0 0 100px rgba(16, 185, 129, 0.7);
+        opacity: 0.9;
+    }
+
+    20% {
+        text-shadow: 0px -2px 0 var(--text-dark-purple), 0px 2px 0 var(--text-dark-purple),
+            -2px 0px 0 var(--text-dark-purple), 2px 0px 0 var(--text-dark-purple),
+            -2px -2px 0 var(--text-dark-purple), 2px -2px 0 var(--text-dark-purple),
+            -2px 2px 0 var(--text-dark-purple), 2px 2px 0 var(--text-dark-purple),
+            0 0 25px #06b6d4, 0 0 60px #06b6d4, 0 0 100px rgba(6, 182, 212, 0.8);
+        opacity: 0.95;
+    }
+
+    40% {
+        text-shadow: 0px -2px 0 var(--text-dark-purple), 0px 2px 0 var(--text-dark-purple),
+            -2px 0px 0 var(--text-dark-purple), 2px 0px 0 var(--text-dark-purple),
+            -2px -2px 0 var(--text-dark-purple), 2px -2px 0 var(--text-dark-purple),
+            -2px 2px 0 var(--text-dark-purple), 2px 2px 0 var(--text-dark-purple),
+            0 0 25px #8b5cf6, 0 0 60px #8b5cf6, 0 0 100px rgba(139, 92, 246, 0.8);
+        opacity: 1;
+    }
+
+    60% {
+        text-shadow: 0px -2px 0 var(--text-dark-purple), 0px 2px 0 var(--text-dark-purple),
+            -2px 0px 0 var(--text-dark-purple), 2px 0px 0 var(--text-dark-purple),
+            -2px -2px 0 var(--text-dark-purple), 2px -2px 0 var(--text-dark-purple),
+            -2px 2px 0 var(--text-dark-purple), 2px 2px 0 var(--text-dark-purple),
+            0 0 25px #ec4899, 0 0 60px #ec4899, 0 0 100px rgba(236, 72, 153, 0.7);
+        opacity: 1;
+    }
+
+    80% {
+        text-shadow: 0px -2px 0 var(--text-dark-purple), 0px 2px 0 var(--text-dark-purple),
+            -2px 0px 0 var(--text-dark-purple), 2px 0px 0 var(--text-dark-purple),
+            -2px -2px 0 var(--text-dark-purple), 2px -2px 0 var(--text-dark-purple),
+            -2px 2px 0 var(--text-dark-purple), 2px 2px 0 var(--text-dark-purple),
+            0 0 25px var(--champagne-gold), 0 0 60px var(--champagne-gold), 0 0 100px rgba(253, 230, 138, 0.9);
+        opacity: 0.95;
+    }
+}
+
+/* ==========================================================================
+   2. 共通カードUI ＆ 文字サイズ一括調整（レスポンシブ統合版）
+   ========================================================================== */
+/* ✨ このカタマリごと、今の設定に上書きするだけでOKです！ */
+.fortune-card {
+    background-color: var(--card-white);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(46, 42, 114, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    padding: 40px 60px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* 💻 【PCで見るとき】のサイズ調整 */
+
+/* タイトル（見出し）の設定 */
+.fortune-card h3 {
+    font-size: 20px !important;
+    margin-bottom: 16px;
+    margin-top: 30px;
+}
+
+/* 🔮 【今の君への想い度】のタイトル部分 */
+.luck-text strong {
+    font-size: 24px !important;
+    font-weight: bold;
+    color: #e42769;
+}
+
+/* 🔮 「テスト、君の守護神ヘスティアだよ」のサイズ */
+.god-intro p {
+    font-size: 20px !important;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    /* 🔮 【追加】長い名前が来ても、単語の途中でぶつ切りにせず綺麗に折り返すお守り */
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+}
+
+.god-intro strong {
+    font-size: 26px !important;
+    color: #8c00ff;
+}
+
+/* ✨ すべての文章・メッセージ・セリフを同じ18pxに揃える設定 */
+.luck-text,
+.quote-text,
+.main-message,
+.constellation-info p,
+.quote-card-text {
+    font-size: 18px !important;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================================================
+   3. 共通ボタンUI ＆ 装飾要素
+   ========================================================================== */
+.fortune-btn {
+    background-color: var(--text-dark-purple);
+    color: #ffffff;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.fortune-btn:hover {
+    background-color: #3f3994;
+    transform: translateY(-2px);
+}
+
+.fortune-card hr {
+    border: 0;
+    border-top: 1px dashed rgba(46, 42, 114, 0.2);
+    margin: 25px 0;
+}
+
+/* 守護神画像（img）の設定 */
+.shugoshin-image {
+    margin: 20px 0;
+}
+
+.shugoshin-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 3px solid rgba(255, 215, 0, 0.9);
+    /* 💡 パキッとした濃い金枠 */
+    border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
+    /* しずく型 */
+    display: block;
+    margin: 0 auto;
+}
+
+/* 各ボックスの背景装飾 */
+.luck-box {
+    background-color: #f8cbdb;
+    /* 元の淡いピンクの座布団 */
+    padding: 15px;
+    border-radius: 12px;
+    max-width: 100%;
+    margin: 15px auto 0 auto;
+    text-align: center;
+}
+
+.quote-section .quote-text {
+    font-size: 18px !important;
+    color: #4c1d95;
+}
+
+.btn-container {
+    margin-bottom: 30px;
+}
+
+.btn-container h3 {
+    margin-bottom: 15px;
+}
+
+.navigation .back-link {
+    color: var(--text-dark-purple);
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+CSS
+
+/* ==========================================================================
+   名言画面（quote.html）用：すべてのサイズを初期の快適サイズに固定
+   ========================================================================== */
+.fortune-card h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px !important;
+    color: #4c1d95 !important;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* 💻 PC版やベースの設定（ここに置いておきます） */
+.quote-section p.quote-card-text {
+    font-size: 26px !important;
+    font-weight: bold;
+    color: #2e2a72 !important;
+    margin: 35px 0 !important;
+    line-height: 1.6;
+}
+
+.quote-section p.quote-author {
+    font-size: 18px !important;
+    color: #2e2a72 !important;
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* ボタンやリンクの余白調整 */
+.quote-nav {
+    margin-top: 40px;
+}
+
+
+
+/* ==========================================================================
+   4. トップページ（入力画面）用のスタイル ＆ エフェクト
+   ========================================================================== */
+.intro-text {
+    font-size: 20px;
+    /* 25xの記述ミスを20pxに修正 */
+    color: #6b7280;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #4c1d95;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #e9d5ff;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #374151;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    border-color: #c084fc;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.4);
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+/* キラキラ・星背景の土台 */
+#sparkle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    display: block;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #fff, 0 0 10px #e9d5ff;
+    opacity: 0;
+    animation: twinkle 5s infinite;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+
+/* ==========================================================================
+   【動きキープ版】お気に入りの滑らかさで左上を流れる星
+   ========================================================================== */
+
+/* 流れ星本体（元の設定のまま変更なし） */
+.shooting-star-css {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #ffffff, 0 0 25px #a78bfa, 0 0 35px #6366f1;
+    opacity: 0;
+}
+
+/* 流れ星の綺麗な長いシッポ（元の設定のまま変更なし） */
+.shooting-star-css::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 250px;
+    height: 2px;
+    background: linear-gradient(90deg, #ffffff, rgba(167, 139, 250, 0.9), rgba(99, 102, 241, 0));
+    transform-origin: left;
+}
+
+/* 📌 【ここを調整！】1本目のスタート位置を「左上の空きスペース」に変更 */
+.star-1 {
+    top: 5%;
+    /* 💡 画面の上から5%の位置 */
+    left: 15%;
+    /* 💡 右側（right）ではなく、左側（left）から25%の中えり寄りに配置 */
+    animation: cssShoot1 7s linear infinite;
+    animation-delay: 2s;
+}
+
+/* 📌 【ここを調整！】2本目のスタート位置も「左上の空きスペース」に変更 */
+.star-2 {
+    top: 15%;
+    /* 💡 1本目より少し低め */
+    left: 25%;
+    /* 💡 1本目より少し右寄りに配置 */
+    animation: cssShoot2 11s linear infinite;
+    animation-delay: 6s;
+}
+
+/* 🌌 1本目のアニメーション（元の心地よい動きのまま！） */
+@keyframes cssShoot1 {
+    0% {
+        transform: translate(0, 0) rotate(-30deg);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-1200px, 700px) rotate(-30deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-1200px, 700px) rotate(-30deg);
+        opacity: 0;
+    }
+}
+
+/* 🌌 2本目のアニメーション（元の心地よい動きのまま！） */
+@keyframes cssShoot2 {
+    0% {
+        transform: translate(0, 0) rotate(-25deg);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    45% {
+        transform: translate(-1400px, 650px) rotate(-25deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-1400px, 650px) rotate(-25deg);
+        opacity: 0;
+    }
+}
+
+/* 📄 CSSファイルに追加するコード */
+
+.error-container {
+    color: #e42769;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.error-item {
+    margin: 5px 0;
+    /* メッセージが複数出たときに、少しだけ上下に隙間を作る */
+    font-size: 15px;
+    /* スマホやPCでも見やすいサイズ */
+}
+
+/* ==========================================================================
+   📱 【ここに引っ越し！】スマートフォン版のレスポンシブ設定（画面幅780px以下）
+   ========================================================================== */
+@media screen and (max-width: 780px) {
+    .header-container {
+        gap: 12px;
+        margin-top: 40px;
+    }
+
+    .header-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    h1 {
+        font-size: 25px;
+        letter-spacing: 2px;
+        animation: titleGlowMobile 12s ease-in-out infinite;
+    }
+
+    .fortune-card {
+        width: 90%;
+        padding: 30px 15px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    /* 📱 スマホ時の文字サイズを一括調整 */
+    .fortune-card h3 {
+        font-size: 17px !important;
+        margin-top: 20px;
+    }
+
+    .luck-text strong {
+        font-size: 17px !important;
+    }
+
+    .god-intro p {
+        font-size: 18px !important;
+    }
+
+    .god-intro strong {
+        font-size: 20px !important;
+    }
+
+    .fortune-card p,
+    .quote-text,
+    .main-message,
+    .constellation-info p {
+        font-size: 15px !important;
+    }
+
+    .shugoshin-image {
+        margin: 15px 0;
+    }
+
+    /* 💡 ファイルの最下部にきたことで、上の26pxを確実に上書きできます！ */
+    .quote-section p.quote-card-text {
+        font-size: 18px !important;
+        line-break: strict !important;
+        line-height: 1.6 !important;
+        text-align: center !important;
+        margin: 20px 0 !important;
+        /* スマホ用に上下の余白も少しスッキリ */
+    }
+
+    .quote-section p.quote-author {
+        font-size: 13px !important;
+        margin-top: 10px !important;
+        text-align: center !important;
+        /* スマホでは中央寄せが見やすいです */
+    }
+
+    .fortune-card h2 {
+        /* 📏 【ここを自由に変更！】スマホでの「神々の名言」のサイズを指定します */
+        font-size: 20px !important;
+        color: #4c1d95 !important;
+        font-weight: bold !important;
+        margin-top: 10px !important;
+        margin-bottom: 25px !important;
+        text-align: center !important;
+    }
+
+    /* 📱 スマホ画面（780px以下）のときだけ、改行タグを復活させて作動させる */
+    .sp-only {
+        display: inline;
+    }
+}
+
+/* スマホ用オーロラアニメーション */
+@keyframes titleGlowMobile {
+
+    0%,
+    100% {
+        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #10b981, 0 0 25px #10b981, 0 0 45px rgba(16, 185, 129, 0.6);
+    }
+
+    20% {
+        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #06b6d4, 0 0 25px #06b6d4, 0 0 45px rgba(6, 182, 212, 0.7);
+    }
+
+    40% {
+        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #8b5cf6, 0 0 25px #8b5cf6, 0 0 45px rgba(139, 92, 246, 0.7);
+    }
+
+    60% {
+        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #ec4899, 0 0 25px #ec4899, 0 0 45px rgba(236, 72, 153, 0.6);
+    }
+
+    80% {
+        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px var(--champagne-gold), 0 0 25px var(--champagne-gold), 0 0 45px rgba(253, 230, 138, 0.8);
+    }
+}

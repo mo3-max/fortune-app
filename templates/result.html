@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守護神からの言葉</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <div class="fortune-card">
+            <section class="god-intro">
+                <p>{{ name }}、君の守護神”<strong class="shugoshin-highlight" data-color="{{ shugoshin.color }}">{{
+                        shugoshin.name }}</strong>”だよ</p>
+            </section>
+
+            <hr>
+
+            <div class="luck-box">
+                <p class="luck-text"><strong>【今の君への想い】</strong><br> {{ luck }}</p>
+            </div>
+
+            <hr>
+
+            <section class="quote-section">
+                <h3>今の君に贈る言葉</h3>
+                <p class="quote-text">「{{ meigen }}」</p>
+            </section>
+
+            <hr>
+
+            <div class="shugoshin-image">
+                <img src="{{ url_for('static', filename='images/' + shugoshin.image) }}" alt="{{ shugoshin.name }}">
+            </div>
+
+            <hr>
+
+            <section class="love-message">
+                <h3>{{ shugoshin.name }}からの親愛メッセージ</h3>
+                <p class="main-message">{{ shugoshin.message }}</p>
+            </section>
+
+            <hr>
+
+            <section class="constellation-info">
+                <h3>{{ constellation }}のあなたは</h3>
+                <p>{{ shugoshin.feature }}</p>
+            </section>
+
+            <hr>
+
+            <div class="btn-container">
+                <h3>前に進むあなたに送ります</h3>
+                <a href="/quote" class="fortune-btn">神々の名言を見る</a>
+            </div>
+
+            <div class="navigation">
+                <a href="/" class="back-link">← トップに戻る</a>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 💡 画面が100%完全に読み込み終わったら（画像やエフェクトも含めて）実行する
+        $(window).on('load', function () {
+            // さらに100ミリ秒（0.1秒）だけ意図的にタイミングを遅らせて、確実に一番上へ弾く
+            setTimeout(function () {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
+
+        // 文字色を変える魔法（これはそのままで大丈夫です！）
+        $('.shugoshin-highlight').css('color', $('.shugoshin-highlight').data('color'));
+    </script>
+</body>
+</body>
+
+</html>

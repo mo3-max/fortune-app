@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神々の名言 - 星座男子守護神占い</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div id="sparkle-container">
+        <div class="shooting-star-css star-1"></div>
+        <div class="shooting-star-css star-2"></div>
+    </div>
+
+    <div class="stars">
+    </div>
+    <div class="container">
+        <div class="fortune-card">
+            <h2>～神々の名言～</h2>
+            <hr>
+
+            <div class="quote-section">
+                <p class="quote-card-text">「 {{ quote }} 」</p>
+                <p class="quote-author">ー {{ author }}</p>
+            </div>
+
+            <div class="btn-container">
+                <a href="/" class="fortune-btn">トップへ戻る</a>
+            </div>
+            <div class="navigation">
+                <a href="javascript:history.back();" class="back-link">← 結果に戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/shooting_stars.js') }}"></script>
+
+</body>
+
+</html>
