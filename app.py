@@ -1,17 +1,22 @@
-from flask import Flask, render_template, request, redirect, flash
-import requests
-import random
-from datetime import date
-import messages
-# from dotenv import load_dotenv
-from const_data import SHUGOSHIN_INFO
 import os
+import random
+import requests
+from datetime import date
+from flask import Flask, flash, redirect, render_template, request
 
-# load_dotenv()
-# API_KEY = os.getenv("API_KEY")
+# 📦 【重要】すでにある本物のデータファイルから情報を読み込みます
+from const_data import SHUGOSHIN_INFO
+import messages
 
-API_KEY = "hstDxwZ8x24vjqiX3WOSLGHUUGyGlff5aCRse99nsFFYh9pneVFmjrcINp37wYRe"
+# 💡 手元のPC環境による「dotenvエラー」を完全に回避するセーフティ設計
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
+# ⭕ APIキーを取得（Renderの環境変数、または手元の .env から自動取得）
+API_KEY = os.environ.get("OPENAI_API_KEY", "")
 # インスタンス生成
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -165,8 +170,8 @@ def translate_to_japanese(text):
 def quote():
 
     # 💡 ここを True にするとテスト用、False にすると本番用（API使用）
-    test_mode = True 
-
+    test_mode = False
+    
     if test_mode:
         # --- テスト用のデータ（APIを叩かない） ---
         quote_text = "【テスト表示】無限の可能性を信じれば、道は自ずと開けるでしょう。"

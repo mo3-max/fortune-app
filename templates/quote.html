@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>神々の名言 - 星座男子守護神占い</title>
+    <title>神々の名言</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
 </head>
 
 <body>
+
     <div id="sparkle-container">
         <div class="shooting-star-css star-1"></div>
         <div class="shooting-star-css star-2"></div>
+        <div class="shooting-star-css star-3"></div>
+        <div class="shooting-star-css star-4"></div>
     </div>
 
     <div class="stars">
@@ -30,7 +33,9 @@
                 <p class="quote-card-text">「 {{ quote }} 」</p>
                 <p class="quote-author">ー {{ author }}</p>
             </div>
-
+            <div class="update-notice">
+                <p>※メッセージは毎日13〜14時頃に更新</p>
+            </div>
             <div class="btn-container">
                 <a href="/" class="fortune-btn">トップへ戻る</a>
             </div>
