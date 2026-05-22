@@ -20,10 +20,10 @@
         <div class="fortune-card">
 
             <section class="god-intro">
-                <p>{{ name }}、君を<br class="sp-only">守るのは”<strong class="shugoshin-highlight"
+                <p>{{ name }}<br class="sp-only">を守るのは”<strong class="shugoshin-highlight"
                         data-color="{{ shugoshin.color }}">{{ shugoshin.name }}</strong>”だよ</p>
             </section>
-
+            <hr>
             <div class="shugoshin-image">
                 <img src="{{ url_for('static', filename='images/' + shugoshin.image) }}" alt="{{ shugoshin.name }}">
             </div>
