@@ -42,10 +42,8 @@ body {
 }
 
 /* ==========================================================================
-   2. 枠組み（.wrapper）と共通カードUI（PC版ベース）
+   2. 枠組みと共通カードUI（PC版ベース）
    ========================================================================== */
-
-
 .fortune-card {
     background-color: var(--card-white);
     backdrop-filter: blur(8px);
@@ -107,12 +105,14 @@ h1 {
     margin-top: 10px;
     margin-bottom: 25px;
     font-weight: bold;
+    line-height: 1.4;
 }
 
 .fortune-card h3 {
     font-size: 20px !important;
     margin-bottom: 16px;
     margin-top: 30px;
+    line-height: 1.4;
 }
 
 .luck-text strong {
@@ -128,6 +128,7 @@ h1 {
     margin-bottom: 20px;
     word-break: keep-all !important;
     overflow-wrap: break-word !important;
+    line-height: 1.6;
 }
 
 .god-intro strong {
@@ -144,8 +145,6 @@ h1 {
     line-height: 1.8;
     letter-spacing: 0.06em;
     word-break: keep-all;
-
-
     overflow-wrap: anywhere;
 }
 
@@ -285,7 +284,7 @@ h1 {
     color: #9ca3af;
 }
 
-/* キラキラ・流れ星アニメーション */
+/* --- キラキラ・流れ星アニメーション --- */
 #sparkle-container,
 .stars {
     position: fixed;
@@ -361,34 +360,20 @@ h1 {
     animation-delay: 6s;
 }
 
-/* 📌 3本目のスタート位置を「右下の空きスペース」に */
 .star-3 {
     position: absolute;
-    /* 元の流れ星と重ねるおまじない */
     bottom: 20%;
-    /* 💡 画面の下から10%の位置 */
     right: 25%;
-    /* 💡 画面の右から15%の位置 */
-
-    /* 1本目の滑らかなアニメーション設定（cssShoot1）をそのまま使います */
     animation: cssShoot1 7s linear infinite;
     animation-delay: 1s;
-    /* スタートを1秒ずらす */
 }
 
-/* 📌 4本目のスタート位置を「右下の空きスペース」に変更 */
 .star-4 {
     position: absolute;
     bottom: 10%;
-    /* 💡 3本目より少し高め */
     right: 15%;
-    /* 💡 3本目より少し左寄りに配置 */
-
-    /* 1本目の滑らかなアニメーション設定（cssShoot1）をそのまま使います */
     animation: cssShoot1 9s linear infinite;
-    /* 少しゆっくり流す */
     animation-delay: 5s;
-    /* スタートを5秒ずらす */
 }
 
 @keyframes cssShoot1 {
@@ -468,28 +453,20 @@ h1 {
     font-size: 15px;
 }
 
-
 /* ==========================================================================
    🌌 名言画面：更新案内の文字デザイン
    ========================================================================== */
 .update-notice {
     margin-top: 20px;
-    /* 名言（著者名）との間に少し隙間をあける */
     margin-bottom: 20px;
-    /* ボタンとの間に少し隙間をあける */
     padding: 0 10px;
-    /* 左右にほんの少し余白をつける */
     text-align: center;
-    /* 文字を真ん中に寄せる */
 }
 
 .update-notice p {
     font-size: 0.7rem;
-    /* 文字を少し小さくして上品にする */
     color: #5c537d;
-    /* 💡文字の色を「少し透明な白」にして夜空に馴染ませる */
     line-height: 1.5;
-    /* 行間を広げて読みやすくする */
 }
 
 /* ==========================================================================
@@ -498,8 +475,7 @@ h1 {
 @media screen and (max-width: 780px) {
 
     .fortune-card {
-        width: 92%;
-        /* 📱 スマホ画面の左右にほどよい隙間をキープ */
+        width: 85%;
         max-width: 500px;
         /* 📱 横に広がりすぎず、綺麗に縦長に収まるサイズ */
         padding: 30px 15px;
@@ -528,10 +504,12 @@ h1 {
         box-sizing: border-box;
     }
 
-    /* スマホ用フォントサイズ一括調整 */
+    /* スマホ用フォントサイズ調整 */
     .fortune-card h3 {
-        font-size: 17px !important;
+        font-size: 20px !important;
+        /* 💡 17px から 20px に拡大 */
         margin-top: 20px;
+        line-height: 1.4;
     }
 
     .luck-text strong {
@@ -539,26 +517,48 @@ h1 {
     }
 
     .god-intro p {
-        font-size: 18px !important;
+        font-size: 22px !important;
+        /* 💡 18px から 22px に拡大（名前がバシッと目立ちます） */
+        line-height: 1.5;
     }
 
     .god-intro strong {
-        font-size: 20px !important;
+        font-size: 24px !important;
+        /* 💡 20px から 24px に拡大 */
     }
 
     .fortune-card p,
     .quote-text,
     .main-message,
     .constellation-info p {
-        font-size: 15px !important;
+        font-size: 18px !important;
+        /* 💡 15px から 18px に拡大（小説のようにゆったり読めます） */
+        line-height: 1.8;
     }
 
+    /* スマホ版：画像を囲む枠の調整 */
     .shugoshin-image {
-        margin: 15px 0;
+        width: 100%;
+        margin: 20px auto !important;
+    }
+
+    /* スマホ版：画像を縦長の長方形に変更する */
+    .shugoshin-image img {
+        width: 100% !important;
+        /* 🛠️ PC版の特殊な変形角丸（/付き）を、スマホ版で長方形の綺麗な角丸へ完全にリセット */
+        border-radius: 16px 16px 16px 16px / 16px 16px 16px 16px !important;
+        /* 縦横の比率（アスペクト比）を「横3：縦4」の綺麗な縦長に固定 */
+        aspect-ratio: 3 / 4 !important;
+        /* 画像が縦長に引き伸ばされて歪むのを防ぎ、中央を綺麗にトリミング */
+        object-fit: cover !important;
+        /* ゴールドの枠線をスマホで見ても綺麗に引き締まる太さに調整 */
+        border: 3px solid rgba(255, 215, 0, 0.9) !important;
+        box-shadow: 0 8px 20px rgba(46, 42, 114, 0.2) !important;
     }
 
     .quote-section p.quote-card-text {
-        font-size: 20px !important;
+        font-size: 24px !important;
+        /* 💡 20px から 24px に拡大 */
         line-break: strict !important;
         line-height: 1.6 !important;
         text-align: center !important;
@@ -572,12 +572,14 @@ h1 {
     }
 
     .fortune-card h2 {
-        font-size: 20px !important;
+        font-size: 24px !important;
+        /* 💡 20px から 24px に拡大 */
         color: #4c1d95 !important;
         font-weight: bold !important;
         margin-top: 10px !important;
         margin-bottom: 25px !important;
         text-align: center !important;
+        line-height: 1.4;
     }
 
     .sp-only {
@@ -588,40 +590,39 @@ h1 {
         left: 5%;
     }
 
-    /* ⭕ スマホ版の更新案内をさらに小さく、上品に馴染ませる設定 */
+    /* ⭕ スマホ版の更新案内を限界まで小さく、背景に溶け込ませる設定 */
     .update-notice p {
-        font-size: 0.7rem;
-        /* 制限に引っかからない絶妙な小ささ */
-        color: rgba(92, 83, 125, 0.5);
-        /* 💡色を少しだけ透明(0.5)にして、目立たなくします */
+        font-size: 10px !important;
+        color: rgba(92, 83, 125, 0.4) !important;
+        /* 💡 透明度を0.4にして背景に馴染ませる */
         line-height: 1.2;
-        /* 0にせず、ほんの少しだけ行間を持たせる */
         margin: 0;
-        /* 余計な上下の隙間をリセット */
     }
 }
 
-@keyframes titleGlowMobile {
+/* --- スマホ用タイトルアニメーション --- */
+@media screen and (max-width: 780px) {
+    @keyframes titleGlowMobile {
 
-    0%,
-    100% {
-        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #10b981, 0 0 25px #10b981, 0 0 45px rgba(16, 185, 129, 0.6);
+        0%,
+        100% {
+            text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #10b981, 0 0 25px #10b981, 0 0 45px rgba(16, 185, 129, 0.6);
+        }
+
+        20% {
+            text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #06b6d4, 0 0 25px #06b6d4, 0 0 45px rgba(6, 182, 212, 0.7);
+        }
+
+        40% {
+            text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #8b5cf6, 0 0 25px #8b5cf6, 0 0 45px rgba(139, 92, 246, 0.7);
+        }
+
+        60% {
+            text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #ec4899, 0 0 25px #ec4899, 0 0 45px rgba(236, 72, 153, 0.6);
+        }
+
+        80% {
+            text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px var(--champagne-gold), 0 0 25px var(--champagne-gold), 0 0 45px rgba(253, 230, 138, 0.8);
+        }
     }
-
-    20% {
-        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #06b6d4, 0 0 25px #06b6d4, 0 0 45px rgba(6, 182, 212, 0.7);
-    }
-
-    40% {
-        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #8b5cf6, 0 0 25px #8b5cf6, 0 0 45px rgba(139, 92, 246, 0.7);
-    }
-
-    60% {
-        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px #ec4899, 0 0 25px #ec4899, 0 0 45px rgba(236, 72, 153, 0.6);
-    }
-
-    80% {
-        text-shadow: 0px -1px 0 var(--text-dark-purple), 0px 1px 0 var(--text-dark-purple), -1px 0px 0 var(--text-dark-purple), 1px 0px 0 var(--text-dark-purple), -1px -1px 0 var(--text-dark-purple), 1px -1px 0 var(--text-dark-purple), -1px 1px 0 var(--text-dark-purple), 1px 1px 0 var(--text-dark-purple), 0 0 12px var(--champagne-gold), 0 0 25px var(--champagne-gold), 0 0 45px rgba(253, 230, 138, 0.8);
-    }
-
 }

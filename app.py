@@ -4,7 +4,7 @@ import requests
 from datetime import date
 from flask import Flask, flash, redirect, render_template, request
 
-# 📦 【重要】すでにある本物のデータファイルから情報を読み込みます
+# 📦 すでにある本物のデータファイルから情報を読み込み
 from const_data import SHUGOSHIN_INFO
 import messages
 
@@ -17,12 +17,19 @@ except ImportError:
 
 # ⭕ APIキーを取得（Renderの環境変数、または手元の .env から自動取得）
 API_KEY = os.environ.get("OPENAI_API_KEY", "")
+
 # インスタンス生成
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
 
-# 結果画面
+# --- 1. トップ画面（入力画面） ---
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+# --- 2. 結果画面 ---
 @app.route('/result', methods=['POST'])
 def result():
     name = request.form.get('name', '')
@@ -32,39 +39,34 @@ def result():
     # 💡 エラーがあったかどうかを記録する「目印」（最初はエラーなしのFalse）
     has_error = False
 
-    # 1. 名前の空白チェック
+    # 1. 名前の空白チェック（全角スペースも考慮）
     cleaned_name = name.strip().replace('　', '') 
     if not cleaned_name:
-        flash("お名前を入力してね！")
+        flash("お名前を入力してね！", category='message')
         has_error = True  # 💡 すぐに戻らず、目印だけつける
 
     # 2. 星座の未選択チェック
     if not constellation:
-        flash("あなたの星座を選んでね！")
+        flash("あなたの星座を選んでね！", category='message')
         has_error = True  # 💡 目印だけつける
 
     # 3. 気持ちの未選択チェック
     if not mood:
-        flash("今の気分を教えてね！")
+        flash("今の気分を教えてね！", category='message')
         has_error = True  # 💡 目印だけつける
 
-
-    # 💡 【修正】もし1つでもエラーの目印がついていたら、入力データを持って戻る
+    # 💡 もし1つでもエラーの目印がついていたら、入力データを持ってトップに戻る
     if has_error:
-        # 入力されたデータを辞書（連想配列）にまとめます
         entered_data = {
             "name": name,
             "constellation": constellation,
             "mood": mood
         }
-        # エラーメッセージとは別に、このデータも「flash」のポケットに入れます
-        # （引数に category='data' とつけることで、エラー文字と区別できます）
+        # 引数に category='data' とつけることで、HTML側でエラー文字と区別して取得できます
         flash(entered_data, category='data')
-        
         return redirect('/')
         
     # ➔ ーーー ここから下は、すべて正常に選ばれたときの処理 ーーー
-    # （info = SHUGOSHIN_INFO.get... などの既存のコードが続きます）
     
     # 星座に合わせた情報を取得（エラー防止のデフォルト値も完備）
     info = SHUGOSHIN_INFO.get(constellation, {
@@ -82,78 +84,67 @@ def result():
     else:
         meigen_list = messages.default_messages
 
-    # # 🔮 【日替わりの魔法】
-    # today_str = date.today().strftime("%Y%m%d")
-    # random.seed(f"{today_str}_{mood}")
-
-    # 今日・その気分の組み合わせで「絶対に固定」された名言と運勢（★）が選ばれます
+    # 今日・その気分の組み合わせでランダムに名言と運勢（★）を選択
     raw_meigen = random.choice(meigen_list)
     selected_luck = random.choice(messages.luck_list)
-
-    # # 📌 ランダムのシード値をノーマル状態にリセット
-    # random.seed(None)
 
     # 選ばれた文章の「{name}」の部分に、実際のユーザー名を流し込む
     selected_meigen = raw_meigen.format(name=name)
 
-    # ==========================================================================
-    # 🌟 【修正箇所】カラー判定の前に、守護神の名前を「info['name']」から正しく取得する
-    # ==========================================================================
+    # 守護神の名前からカラー判定を行う
+
     shugoshin_name = info['name']
 
     if "ゼウス" in shugoshin_name:
-        shugoshin_color = "#d97706"  # キング・ゴールド
-    elif "ヘラ" in shugoshin_name:
-        shugoshin_color = "#7c3aed"  # ロイヤル・パープル
+        shugoshin_color = "#d97706"  # キング・ゴールド（射手座）
+    elif "ヘスティア" in shugoshin_name:
+        shugoshin_color = "#7c3aed"  # ロイヤル・パープル（牡牛座）
     elif "ポセイドン" in shugoshin_name:
-        shugoshin_color = "#2563eb"  # オーシャン・ディープ
-    elif "デメテル" in shugoshin_name:
-        shugoshin_color = "#16a34a"  # リーフ・エメラルド
+        shugoshin_color = "#2563eb"  # オーシャン・ディープ（魚座）
+    elif "アストライア" in shugoshin_name:
+        shugoshin_color = "#16a34a"  # リーフ・エメラルド（乙女座）
     elif "アテナ" in shugoshin_name:
         shugoshin_color = "#1e3a8a"  # インテリ・ネイビー
     elif "アポロン" in shugoshin_name:
-        shugoshin_color = "#ea580c"  # サンシャイン・オレンジ
+        shugoshin_color = "#ea580c"  # サンシャイン・オレンジ（獅子座）
     elif "アルテミス" in shugoshin_name:
-        shugoshin_color = "#2dd4bf"  # ルナ・ミント
+        shugoshin_color = "#2dd4bf"  # ルナ・ミント（蟹座）
     elif "アレス" in shugoshin_name:
-        shugoshin_color = "#dc2626"  # パッション・レッド
+        shugoshin_color = "#dc2626"  # パッション・レッド（牡羊座）
     elif "アフロディーテ" in shugoshin_name:
-        shugoshin_color = "#f43f5e"  # ラブリー・ローズ
-    elif "ヘファイストス" in shugoshin_name:
-        shugoshin_color = "#9f1239"  # スモーキー・ガーネット
+        shugoshin_color = "#f43f5e"  # ラブリー・ローズ（天秤座）
+    elif "ハデス" in shugoshin_name:
+        shugoshin_color = "#9f1239"  # スモーキー・ガーネット（蠍座）
     elif "ヘルメス" in shugoshin_name:
-        shugoshin_color = "#eab308"  # カナリア・イエロー
-    elif "ディオニュソス" in shugoshin_name:
-        shugoshin_color = "#c084fc"  # マゼンタ・ワイン
+        shugoshin_color = "#eab308"  # カナリア・イエロー（双子座）
+    elif "クロノス" in shugoshin_name:
+        shugoshin_color = "#5c537d"  # ミッドナイト・シャドウ（山羊座）
+    elif "ウラヌス" in shugoshin_name:
+        shugoshin_color = "#c084fc"  # マゼンタ・ワイン（水瓶座）
     else:
-        shugoshin_color = "#6366f1"  # 万が一のときのデフォルト（インディゴ）
+        shugoshin_color = "#6366f1"  # デフォルト（インディゴ）
 
-    # 💡 『shugoshin』という1つのオブジェクト（辞書型）に名前とカラーをまとめます
+    # 💡 『shugoshin』という1つのオブジェクト（辞書型）に荷物をまとめます
     shugoshin_data = {
         'name': shugoshin_name,
         'color': shugoshin_color,
-        'image': info['image'],      # 💡 これらも一緒にまとめておくと、さらにFlask版らしくスッキリします！
+        'image': info['image'],
         'feature': info['feature'],
         'message': info['message']
     }
 
-    # ==========================================================================
-    # 🌟 【これぞFlask版！】荷物がすっきりまとまった美しいリターン
-    # ==========================================================================
+    # 荷物をまとめてスッキリHTMLへリターン
     return render_template(
         'result.html',
-        shugoshin=shugoshin_data,  # 👈 これ1つ送るだけで、名前、色、画像、メッセージが全部HTMLに届きます！
+        shugoshin=shugoshin_data,  # 名前、色、画像、メッセージが全部ここに入っています
         name=name,
         constellation=constellation,
         meigen=selected_meigen,
         luck=selected_luck
     )
-# 入力画面
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-# --- 翻訳用の関数（Flaskのルートの外に置きます） ---
+
+# --- 3. 翻訳用の補助関数（APIルートの外に配置） ---
 def translate_to_japanese(text):
     try:
         # Google翻訳の無料枠を利用するURL
@@ -165,10 +156,10 @@ def translate_to_japanese(text):
         print(f"翻訳エラー: {e}")
         return text
 
-# --- 結果画面から別画面の名言へ ---
+
+# --- 4. 神々の名言画面（外部API連携） ---
 @app.route('/quote')
 def quote():
-
     # 💡 ここを True にするとテスト用、False にすると本番用（API使用）
     test_mode = False
     
@@ -177,22 +168,23 @@ def quote():
         quote_text = "【テスト表示】無限の可能性を信じれば、道は自ずと開けるでしょう。"
         author_name = "テストの守護神"
     else:
+        # 🛠️ 【インデント修正完了】本番用APIの処理を正しいインデント位置へ補正しました
         url = 'https://api.thousand-api.com/v1/quotes/random'
         headers = {
             'x-api-key': API_KEY,
             'Content-Type': 'application/json'
-    }
+        }
     
         try:
-        # 1. APIから本物のデータを取得
+            # 1. APIから本物のデータを取得
             response = requests.get(url, headers=headers, timeout=5)
             data = response.json()
         
-        # 2. 英語の名言と著者名を取得
+            # 2. 英語の名言と著者名を取得
             original_quote = data.get('content', 'Believe in yourself.')
             author_name = data.get('author', 'Unknown')
         
-        # 3. 英語を日本語に翻訳する（上の関数を呼び出し、引数にoriginal_quoteを渡す）
+            # 3. 英語を日本語に翻訳
             quote_text = translate_to_japanese(original_quote)
             
         except Exception as e:
@@ -203,6 +195,6 @@ def quote():
     # 4. 翻訳済みの名言を画面に送る
     return render_template('quote.html', quote=quote_text, author=author_name)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-    

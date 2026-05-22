@@ -13,18 +13,15 @@
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
 </head>
 
-
 <body>
     <div class="header-container">
         <img src="{{ url_for('static', filename='images/the_moon.png') }}" alt="月のイラスト" class="header-img">
-
         <h1>星座守護神男子</h1>
-
         <img src="{{ url_for('static', filename='images/playing_cards.png') }}" alt="星座盤のイラスト" class="header-img">
     </div>
+
     <div class="fortune-card">
-        <p class="intro-text">あなたの星座と今の気分から、<br class="sp-only">あなたの守護神がやさしく包みます。
-        </p>
+        <p class="intro-text">あなたの星座と今の気分から、<br class="sp-only">あなたを守る星座がやさしく包みます。</p>
         <hr>
 
         {% set prev = get_flashed_messages(category_filter=['data'])[0] if
@@ -41,13 +38,11 @@
             </div>
             {% endif %}
             {% endwith %}
+
             <div class="form-group">
                 <label for="username">お名前（ニックネーム）</label>
                 <input type="text" id="username" name="name" placeholder="呼んでほしい名前" value="{{ prev.name or '' }}">
             </div>
-            <!-- テスト用コード -->
-            <!-- <input type="text" id="username" name="username" placeholder="呼んでほしい名前" value="テスト"> -->
-
 
             <div class="form-group">
                 <label for="constellation">あなたの星座</label>
@@ -55,8 +50,6 @@
                     <option value="">-- 星座を選択してください --</option>
                     <option value="牡羊座" {% if prev.constellation=='牡羊座' %}selected{% endif %}>牡羊座</option>
                     <option value="牡牛座" {% if prev.constellation=='牡牛座' %}selected{% endif %}>牡牛座</option>
-                    <!-- テスト用 -->
-                    <!-- <option value="牡牛座" selected>牡牛座</option> -->
                     <option value="双子座" {% if prev.constellation=='双子座' %}selected{% endif %}>双子座</option>
                     <option value="蟹座" {% if prev.constellation=='蟹座' %}selected{% endif %}>蟹座</option>
                     <option value="獅子座" {% if prev.constellation=='獅子座' %}selected{% endif %}>獅子座</option>
@@ -75,8 +68,6 @@
                 <select id="mood" name="mood">
                     <option value="">-- 今の気分を選択してください --</option>
                     <option value="tired" {% if prev.mood=='tired' %}selected{% endif %}>癒やしてほしい</option>
-                    <!-- テスト用 -->
-                    <!-- <option value="tired" selected>癒やしてほしい</option> -->
                     <option value="happy" {% if prev.mood=='happy' %}selected{% endif %}>もっと元気になりたい！</option>
                     <option value="lonely" {% if prev.mood=='lonely' %}selected{% endif %}>誰かにそばにいてほしい</option>
                 </select>
@@ -88,11 +79,11 @@
 
         </form>
     </div>
-    <div class="stars">
-        <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/stars.js') }}"></script>
-    </div>
-    </div>
 
+    <div class="stars"></div>
+
+    <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/stars.js') }}"></script>
+</body>
 
 </html>

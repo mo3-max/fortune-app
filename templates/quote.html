@@ -22,8 +22,8 @@
         <div class="shooting-star-css star-4"></div>
     </div>
 
-    <div class="stars">
-    </div>
+    <div class="stars"></div>
+
     <div class="container">
         <div class="fortune-card">
             <h2>～神々の名言～</h2>
@@ -33,12 +33,15 @@
                 <p class="quote-card-text">「 {{ quote }} 」</p>
                 <p class="quote-author">ー {{ author }}</p>
             </div>
+
             <div class="update-notice">
                 <p>※メッセージは毎日13〜14時頃に更新</p>
             </div>
+
             <div class="btn-container">
                 <a href="/" class="fortune-btn">トップへ戻る</a>
             </div>
+
             <div class="navigation">
                 <a href="javascript:history.back();" class="back-link">← 結果に戻る</a>
             </div>
@@ -47,7 +50,6 @@
 
     <script src="{{ url_for('static', filename='js/sparkle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/shooting_stars.js') }}"></script>
-
 </body>
 
 </html>
