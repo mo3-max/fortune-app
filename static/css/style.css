@@ -24,10 +24,12 @@
 html,
 body {
     width: 100%;
+    height: 100%;
+    /* 💡 【追加】画面の縦幅を100%に固定する */
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    /* 左右のガタつきを防止 */
+    overflow: hidden;
+    /* 💡 【変更】-x を消して上下左右すべてのはみ出し・スクロールを完全に禁止！ */
 }
 
 body {
@@ -475,7 +477,7 @@ h1 {
 @media screen and (max-width: 780px) {
 
     .fortune-card {
-        width: 85%;
+        width: 90%;
         max-width: 500px;
         /* 📱 横に広がりすぎず、綺麗に縦長に収まるサイズ */
         padding: 30px 15px;
@@ -602,6 +604,16 @@ h1 {
 
 /* --- スマホ用タイトルアニメーション --- */
 @media screen and (max-width: 780px) {
+
+    .intro-text {
+        font-size: 15px;
+        /* 💡 16pxよりほんの少しだけ小さく（15px）して安全圏に */
+        letter-spacing: -0.5px;
+        /* 💡 【追加1】文字と文字の間隔をほんの少しだけ詰める */
+        word-break: keep-all;
+        /* 💡 【追加2】単語の途中（包みま、など）での改行を絶対に禁止する */
+    }
+
     @keyframes titleGlowMobile {
 
         0%,
